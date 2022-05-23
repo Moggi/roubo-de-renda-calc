@@ -1,0 +1,13 @@
+
+.env
+venv
+
+*.py[co]
+__pycache__
+.python-version
+
+.vscode
+var/
+dist/
+
+.DS_Store
