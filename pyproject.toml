@@ -38,3 +38,7 @@ line_length = 119
 [tool.pylint.'MESSAGES CONTROL']
 # confidence = "HIGH,CONTROL_FLOW,INFERENCE_FAILURE"
 disable = ["missing-module-docstring", "line-too-long"]
+
+[tool.pytest.ini_options]
+addopts = ["--doctest-modules", "--disable-warnings"]
+testpaths = ["app"]

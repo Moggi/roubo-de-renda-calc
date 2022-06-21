@@ -1,9 +1,8 @@
 import logging
-from decimal import Decimal
 
 from dotenv import load_dotenv
 
-from app.utils import get_inss_tax, get_irff_tax
+from app.utils import get_tax_summary
 
 load_dotenv(override=True)
 
@@ -24,18 +23,5 @@ salaries = [
     "8000",
 ]
 for salary in salaries:
-    inss_tax = get_inss_tax(salary=salary)
-    base_irff = Decimal(salary) - inss_tax
-    irff_tax = get_irff_tax(base_irff)
-    liquid = base_irff - irff_tax
-    stolen = inss_tax + irff_tax
-    logging.warning(
-        {
-            "Salary": salary,
-            "INSS tax": str(inss_tax),
-            "IRFF base": str(base_irff),
-            "IRFF tax": str(irff_tax),
-            "Stolen": str(stolen),
-            "Bottom line": str(liquid),
-        }
-    )
+    summary = get_tax_summary(salary=salary)
+    logging.warning(summary)

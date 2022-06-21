@@ -34,8 +34,8 @@ radon mi $_PATH -nb
 echo -e "\n [*] Bandit security issues [bandit -r $_PATH]"
 bandit -r $_PATH
 
-echo -e "\n [*] Doctest with pytest [pytest --doctest-modules $_PATH --disable-warnings]"
-pytest --doctest-modules $_PATH --disable-warnings
+echo -e "\n [*] Doctest with pytest [pytest $_PATH]"
+pytest $_PATH
 
 echo "==================================="
 echo "==  Good, exiting without error  =="

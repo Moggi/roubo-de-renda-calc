@@ -112,3 +112,34 @@ def get_irff_tax(salary: Union[Decimal, str, int, float]) -> Decimal:
             return round_money(final)
 
     return Decimal("Infinity")
+
+
+def get_tax_summary(salary: Union[Decimal, str]) -> dict:
+    """Get a summary of the tax will be payed and the remaining amount.
+
+    Examples
+    --------
+    >>> get_tax_summary("6000") == {\
+            'Salary': '6000',\
+            'INSS tax': '676.17',\
+            'IRFF base': '5323.83',\
+            'IRFF tax': '594.69',\
+            'Stolen': '1270.86',\
+            'Bottom line': '4729.14'\
+        }
+    True
+    """
+    inss_tax = get_inss_tax(salary=salary)
+    base_irff = Decimal(salary) - inss_tax
+    irff_tax = get_irff_tax(base_irff)
+    liquid = base_irff - irff_tax
+    stolen = inss_tax + irff_tax
+
+    return {
+        "Salary": salary,
+        "INSS tax": str(inss_tax),
+        "IRFF base": str(base_irff),
+        "IRFF tax": str(irff_tax),
+        "Stolen": str(stolen),
+        "Bottom line": str(liquid),
+    }
