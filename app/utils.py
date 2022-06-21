@@ -92,6 +92,8 @@ def get_irff_tax(salary: Union[Decimal, str, int, float]) -> Decimal:
     Decimal('413.42')
     >>> get_irff_tax("8000")
     Decimal('1330.64')
+    >>> get_irff_tax("Infinity")
+    Decimal('Infinity')
     """
     range_rates = {
         "1903.98": ["0", "0"],
@@ -100,11 +102,13 @@ def get_irff_tax(salary: Union[Decimal, str, int, float]) -> Decimal:
         "4664.68": ["22.5", "636.13"],
         "Infinity": ["27.5", "869.36"],
     }
-    salary = Decimal(salary)
+    decimal_salary = Decimal(salary)
     for range_value, range_rate in range_rates.items():
         irrf_rate = Decimal(range_rate[0]) / Decimal("100")
         irrf_deduction = Decimal(range_rate[1])
 
-        if salary <= Decimal(range_value):
-            final = salary * irrf_rate - irrf_deduction
+        if decimal_salary <= Decimal(range_value) and decimal_salary != Decimal("Infinity"):
+            final = decimal_salary * irrf_rate - irrf_deduction
             return round_money(final)
+
+    return Decimal("Infinity")
