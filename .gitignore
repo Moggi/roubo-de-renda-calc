@@ -11,3 +11,6 @@ var/
 dist/
 
 .DS_Store
+
+htmlcov/
+.coverage
