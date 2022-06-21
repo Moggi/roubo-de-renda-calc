@@ -46,5 +46,23 @@ Package version, python version, dependencies and some dev configs you can find 
 
 With pytest (defined at dev dependecies at [pyproject.toml]):
 ```sh
-pytest --doctest-modules .
+pytest --doctest-modules app
+```
+
+For [coverage.py]
+```sh
+coverage run -m pytest --doctest-modules app
+
+# to see results
+coverage report
+```
+
+[coverage.py]: https://coverage.readthedocs.io/
+
+
+## Code Quality Verification
+
+To run code quality checkup, run the following script:
+```sh
+bash scripts/verify_code_quality.sh ../app
 ```
