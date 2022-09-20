@@ -1,4 +1,5 @@
 import logging
+import sys
 
 from dotenv import load_dotenv
 
@@ -21,7 +22,13 @@ salaries = [
     "6000",
     "7000",
     "8000",
+    "9000",
 ]
-for salary in salaries:
-    summary = get_tax_summary(salary=salary)
-    logging.warning(summary)
+
+
+if __name__ == "__main__":
+    salaries = sys.argv[-1:] if len(sys.argv) > 1 else salaries
+
+    for salary in salaries:
+        summary = get_tax_summary(salary=salary)
+        logging.warning(summary)
