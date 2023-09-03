@@ -35,22 +35,22 @@ def get_inss_tax(salary: Union[Decimal, str, int, float], inss_range_rate: dict[
     Decimal('90.00')
     >>> get_inss_tax("1212.62")
     Decimal('90.95')
-    >>> get_inss_tax("1212.63")
-    Decimal('90.96')
+    >>> get_inss_tax("1320.00")
+    Decimal('99.00')
     >>> get_inss_tax("2427.35")
-    Decimal('200.28')
+    Decimal('198.66')
     >>> get_inss_tax("3641.03")
-    Decimal('345.92')
+    Decimal('339.98')
     >>> get_inss_tax("8070")
-    Decimal('828.38')
+    Decimal('876.97')
     """
     salary = Decimal(salary)
     default_range_rate = {
         "0": "0",
-        "1212.00": "7.5",
-        "2427.35": "9",
-        "3641.03": "12",
-        "7087.22": "14",
+        "1320.00": "7.5",
+        "2571.29": "9",
+        "3856.94": "12",
+        "7507.49": "14",
     }
     final_range_rate = inss_range_rate or default_range_rate
 
@@ -58,14 +58,15 @@ def get_inss_tax(salary: Union[Decimal, str, int, float], inss_range_rate: dict[
     inss_rate = list(map(Decimal, final_range_rate.values()))
 
     residual = 0
+    lower_range = Decimal("0")
     for index in range(1, len(inss_range)):
         range_value = inss_range[index]
         range_tax = inss_rate[index]
 
-        lower_range = Decimal("0") if index == 1 else inss_range[index - 1] + Decimal("0.01")
+        if index != 1:
+            lower_range = inss_range[index - 1] + Decimal("0.01")
 
         if salary <= range_value:
-
             partial = (salary - lower_range) * range_tax / Decimal("100")
             residual += round_money(partial)
             break
@@ -84,23 +85,23 @@ def get_irff_tax(salary: Union[Decimal, str, int, float]) -> Decimal:
     --------
     >>> get_irff_tax("1000")
     Decimal('0.00')
-    >>> get_irff_tax("2473.65")
-    Decimal('42.72')
-    >>> get_irff_tax("3500.63")
-    Decimal('170.29')
+    >>> get_irff_tax("2826.65")
+    Decimal('53.60')
+    >>> get_irff_tax("3751.05")
+    Decimal('192.26')
     >>> get_irff_tax("4664.68")
-    Decimal('413.42')
+    Decimal('397.82')
     >>> get_irff_tax("8000")
-    Decimal('1330.64')
+    Decimal('1315.04')
     >>> get_irff_tax("Infinity")
     Decimal('Infinity')
     """
     range_rates = {
-        "1903.98": ["0", "0"],
-        "2826.65": ["7.5", "142.80"],
-        "3751.05": ["15", "354.80"],
-        "4664.68": ["22.5", "636.13"],
-        "Infinity": ["27.5", "869.36"],
+        "2112.00": ["0", "0"],
+        "2826.65": ["7.5", "158.40"],
+        "3751.05": ["15", "370.40"],
+        "4664.68": ["22.5", "651.73"],
+        "Infinity": ["27.5", "884.96"],
     }
     decimal_salary = Decimal(salary)
     for range_value, range_rate in range_rates.items():
@@ -121,11 +122,11 @@ def get_tax_summary(salary: Union[Decimal, str]) -> dict:
     --------
     >>> get_tax_summary("6000") == {\
             'Salary': '6000',\
-            'INSS tax': '676.17',\
-            'IRFF base': '5323.83',\
-            'IRFF tax': '594.69',\
-            'Stolen': '1270.86',\
-            'Bottom line': '4729.14'\
+            'INSS tax': '665.92',\
+            'IRFF base': '5334.08',\
+            'IRFF tax': '581.91',\
+            'Stolen': '1247.83',\
+            'Bottom line': '4752.17'\
         }
     True
     """
