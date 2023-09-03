@@ -4,7 +4,7 @@ from typing import Union
 
 
 def round_money(amount: Decimal) -> Decimal:
-    """Utility function to round money
+    """Utility function to round money.
 
     Examples
     --------

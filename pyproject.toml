@@ -38,11 +38,11 @@ select = [
   "S",   # flake8-bandit
   "PL",   # Pylint
 ]
-ignore = ["E203", "E501", "E712"]
+ignore = ["E203", "E501", "E712", "D100", "D401"]
 exclude = ["var", "tests"]
 
 [tool.ruff.per-file-ignores]
-"*/__init__.py" = ["F401", "F403", "F405"]
+"*/__init__.py" = ["D104"]
 
 [tool.ruff.mccabe]
 max-complexity = 5
