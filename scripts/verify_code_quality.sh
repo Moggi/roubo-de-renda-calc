@@ -13,11 +13,8 @@ echo "=========================================="
 echo -e "\n [*] Safety check [safety check]"
 safety check
 
-echo -e "\n [*] Flake8 linting [flake8 $_PATH]"
-flake8 $_PATH
-
-echo -e "\n [*] Pylint linting [pylint $_PATH]"
-pylint $_PATH
+echo -e "\n [*] Ruff linters [ruff check $_PATH]"
+ruff check $_PATH
 
 echo -e "\n [*] Isort module import order [isort $_PATH --check-only]"
 isort $_PATH --check-only

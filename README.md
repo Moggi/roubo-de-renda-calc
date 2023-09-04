@@ -32,6 +32,19 @@ Tabela para Pessoal Física a partir de 2015
 [IRRF]: https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/irpf-imposto-de-renda-pessoa-fisica
 
 
+## Execution
+
+Usage: `python -m app <salary>`
+
+```sh
+# To run the pre-defined salaries
+python -m app
+
+# To run with specific salary
+python -m app 5000.00
+```
+
+
 ## Development
 
 This project makes use of [Poetry] instead of directly interact with `pip`.
